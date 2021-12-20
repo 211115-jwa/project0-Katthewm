@@ -9,9 +9,11 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BicyclePostgres implements BicycleDAO {
+public class BicyclePostgres implements BicycleDAO 
+{
 	private static ConnectionUtil connUtil = ConnectionUtil.getConnectionUtil();
 
+	
 	public static Bicycle createnewbicycle(Bicycle dataToAdd) 
 	{
 		int generatedId = 0;

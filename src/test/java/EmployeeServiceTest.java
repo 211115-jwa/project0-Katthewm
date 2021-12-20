@@ -43,7 +43,7 @@ public class EmployeeServiceTest {
 		
 		when(BicyclePostgres.createnewbicycle(bike));
 		
-		Bicycle newbike = empServ.createnewbike(bike);
+		Bicycle newbike = empServ.createnewbike(bike); 
 		
 		assertEquals(bike, newbike);
 	}
@@ -76,7 +76,7 @@ public class EmployeeServiceTest {
 		Bicycle editBike = new Bicycle();//create new bicycle
 		editBike.setId(9991);
 		
-		when(bicycleDAO.getById(2)).thenReturn(editBike);
+		when(empServ.getById(2)).thenReturn(editBike);
 		doNothing().when(bicycleDAO).update(Mockito.any(Bicycle.class));
 		
 		Bicycle editedBike = new Bicycle();//create new bicycle
@@ -92,7 +92,7 @@ public class EmployeeServiceTest {
 		Bicycle bike = new Bicycle();//create new bicycle
 		bike.setId(9993);
 		
-		when(bicycleDAO.getById(9993)).thenReturn(bike);
+		when(empServ.getById(9993)).thenReturn(bike);
 		
 		Bicycle actualBike = empServ.getById(9993);
 		assertEquals(bike, actualBike);
@@ -100,7 +100,7 @@ public class EmployeeServiceTest {
 	
 	@Test
 	public void getByIdBikeDoesNotExist() {
-		when(bicycleDAO.getById(9993)).thenReturn(null);
+		when(empServ.getById(9993)).thenReturn(null);
 		
 		Bicycle actualBike = empServ.getById(9993);
 		assertNull(actualBike);
