@@ -1,10 +1,12 @@
-
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import project0Katthewm.Bicycle;
 import project0Katthewm.BicycleDAO;
+import project0Katthewm.BicyclePostgres;
 import services.EmployeeService;
 import services.EmployeeServiceImpl;
 
@@ -27,89 +30,79 @@ public class EmployeeServiceTest {
 	@InjectMocks
 	private EmployeeService empServ = new EmployeeServiceImpl();
 	
+	Bicycle bike = new Bicycle(9999,"Giant", "Mountain");
+	Bicycle bike1 = new Bicycle(9998,"Ford", "Mountain");
+	Bicycle bike2 = new Bicycle(9997,"Ford", "Road");
+	Bicycle bike3 = new Bicycle(9996,"Tesla", "Road");
+	Set<Bicycle> testbikes = new HashSet<Bicycle>(); // Create an set object
+	
 	@Test
-	public void addNewPetSuccessfully() {
-		Bicycle pet = new Bicycle();
+	public void addNewBikeSuccessfully() 
+	{
+		Bicycle bike = new Bicycle();//create new bicycle
 		
-		when(bicycleDAO.create(pet)).thenReturn(10);
+		when(BicyclePostgres.createnewbicycle(bike));
 		
-		int newId = empServ.addNewBike(pet);
+		Bicycle newbike = empServ.createnewbike(bike);
 		
-		assertNotEquals(0, newId);
+		assertEquals(bike, newbike);
 	}
 	
 	@Test
-	public void addNewBicycleSomethingWrong() {
-		Bicycle bike = new Bicycle();
+	public void addNewBikeSomethingWrong() {
+		Bicycle bike = new Bicycle();//create new bicycle
 		
 		when(bicycleDAO.create(bike)).thenReturn(0);
 		
-		int newId = empServ.addNewBike(bike);
+		Bicycle newbike = empServ.createnewbike(bike);
 		
-		assertEquals(0,newId);
+		assertNotEquals(bike, newbike);
 	}
-	
 	@Test
-	public void editPetSuccessfully() {
-		Bicycle editedBike = new Bicycle();
-		editedBike.setId(2);
-		editedBike.setModel("Mountain");
+	public void editBikeSuccessfully() 
+	{
+		Bicycle editedBike = new Bicycle();//create new bicycle
+		editedBike.setId(9990);
 		
-		when(bicycleDAO.getById(2)).thenReturn(editedBike);
+		when(BicyclePostgres.getbikesById(9990)).thenReturn(editedBike);
 		doNothing().when(bicycleDAO).update(Mockito.any(Bicycle.class));
 		
-		Bicycle actualBike = empServ.editBike(editedBike.getId());
+		Bicycle actualBike = empServ.editBike(9990);
 		
 		assertEquals(editedBike, actualBike);
 	}
-	
 	@Test
-	public void editPetSomethingWrong() {
-		Bicycle mockPet = new Bicycle();
-		mockPet.setId(2);
+	public void editBikeSomethingWrong() {
+		Bicycle editBike = new Bicycle();//create new bicycle
+		editBike.setId(9991);
 		
-		when(bicycleDAO.getById(2)).thenReturn(mockPet);
+		when(bicycleDAO.getById(2)).thenReturn(editBike);
 		doNothing().when(bicycleDAO).update(Mockito.any(Bicycle.class));
 		
-		Bicycle editedBike = new Bicycle();
-		editedBike.setId(2);
-		editedBike.setModel("Mountain");
+		Bicycle editedBike = new Bicycle();//create new bicycle
+		editedBike.setId(9991);
 		
-		Bicycle actualPet = empServ.editBike(editedBike.getId());
+		Bicycle actualBike = empServ.editBike(9991);
 		
-		assertNotEquals(editedBike, actualPet);
+		assertNotEquals(editedBike, actualBike);
 	}
 	
 	@Test
-	public void editPetDoesNotExist() {
-		when(bicycleDAO.getById(2)).thenReturn(null);
+	public void getByIdBikeExists() {
+		Bicycle bike = new Bicycle();//create new bicycle
+		bike.setId(9993);
 		
-		Bicycle editedBike = new Bicycle();
-		editedBike.setId(2);
-		editedBike.setModel("Mountain");
+		when(bicycleDAO.getById(9993)).thenReturn(bike);
 		
-		Bicycle actualBike = empServ.editBike(editedBike.getId());
-		
-		assertNull(actualBike);
-		verify(bicycleDAO, times(0)).update(Mockito.any(Bicycle.class));
-	}
-	
-	@Test
-	public void getByIdPetExists() {
-		Bicycle bike = new Bicycle();
-		bike.setId(2);
-		
-		when(bicycleDAO.getById(2)).thenReturn(bike);
-		
-		Bicycle actualBike = empServ.getById(2);
+		Bicycle actualBike = empServ.getById(9993);
 		assertEquals(bike, actualBike);
 	}
 	
 	@Test
-	public void getByIdPetDoesNotExist() {
-		when(bicycleDAO.getById(2)).thenReturn(null);
+	public void getByIdBikeDoesNotExist() {
+		when(bicycleDAO.getById(9993)).thenReturn(null);
 		
-		Bicycle actualBike = empServ.getById(2);
+		Bicycle actualBike = empServ.getById(9993);
 		assertNull(actualBike);
 	}
 }

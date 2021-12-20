@@ -7,7 +7,7 @@ import project0Katthewm.Bicycle;
 public interface EmployeeService {
 	// services represent business logic - actual user activities.
 	// what can an employee do?
-	public Bicycle createnewbike();
+	public Bicycle createnewbike(Bicycle newbike);
 	public Bicycle editBike(int id);
 	public Bicycle getById(int id);
 	public void deletebike(int id);

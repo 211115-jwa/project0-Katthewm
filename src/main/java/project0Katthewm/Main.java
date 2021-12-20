@@ -12,7 +12,6 @@ import java.util.Set;
 
 import org.eclipse.jetty.http.HttpStatus;
 
-
 public class Main 
 {
 	private static EmployeeService empServ = new EmployeeServiceImpl();
@@ -51,16 +50,16 @@ public class Main
 						ctx.json(allbikes);
 					}
 				});
-				/*post(ctx -> {
+				post(ctx -> {
 					// bodyAsClass turns JSON into a Java object based on the class you specify
 					Bicycle bike = ctx.bodyAsClass(Bicycle.class);
 					if (bike !=null) {
-						empServ.addNewBike(bike);
+						empServ.createnewbike(bike);
 						ctx.status(HttpStatus.CREATED_201);
 					} else {
 						ctx.status(HttpStatus.BAD_REQUEST_400);
 					}
-				});*/
+				});
 			});
 			path("/bikesbymodel", () -> 
 			{
@@ -145,31 +144,6 @@ public class Main
 					}
 				});*/
 			});
-			path("/createbike", () -> 
-			{
-				put(ctx -> {
-					
-					try {
-						empServ.createnewbike();
-						//System.out.print(createdbike.getBrand());
-						//ctx.json(createdbike);
-
-					} catch (NumberFormatException e) {
-						ctx.status(400);
-						ctx.result("Bike ID must be a numeric value");
-					}
-				});
-				/*put(ctx -> {
-					// bodyAsClass turns JSON into a Java object based on the class you specify
-					Bicycle bike = ctx.bodyAsClass(Bicycle.class);
-					if (bike !=null) {
-						empServ.addNewBike(bike);
-						ctx.status(HttpStatus.CREATED_201);
-					} else {
-						ctx.status(HttpStatus.BAD_REQUEST_400);
-					}
-				});*/
-			});
 			path("/deletebike/{id}", () -> 
 			{
 				put(ctx -> {
@@ -182,16 +156,6 @@ public class Main
 						ctx.result("Bike ID must be a numeric value");
 					}
 				});
-				/*delete(ctx -> {
-					// bodyAsClass turns JSON into a Java object based on the class you specify
-					Bicycle bike = ctx.bodyAsClass(Bicycle.class);
-					if (bike !=null) {
-						empServ.addNewBike(bike);
-						ctx.status(HttpStatus.CREATED_201);
-					} else {
-						ctx.status(HttpStatus.BAD_REQUEST_400);
-					}
-				});*/
 			});
 		});
 	}

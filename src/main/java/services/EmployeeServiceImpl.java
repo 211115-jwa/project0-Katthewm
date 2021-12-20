@@ -48,13 +48,18 @@ public class EmployeeServiceImpl implements EmployeeService
 		return allbikes;
 	}
 
-	public void addNewBike() 
+	public Bicycle addNewBike(Bicycle newbike) 
 	{
-		return BicyclePostgres.createnewbicycle();
+		return BicyclePostgres.createnewbicycle(newbike);
+	}
+
+	public Bicycle createnewbike() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public Bicycle createnewbike() {
+	public Bicycle createnewbike(Bicycle newbike) {
 		// TODO Auto-generated method stub
 		return null;
 	}
